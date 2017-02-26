@@ -40,7 +40,7 @@ createjs.MAJOR_VERSION = 7;
  * Represents the minor version of the original CreateJS library.
  * @define {number}
  */
-createjs.MINOR_VERSION = 1;
+createjs.MINOR_VERSION = 2;
 
 /**
  * Represents the major version of this library.
@@ -275,6 +275,25 @@ createjs.inherits = function(name, child, parent) {
   child.prototype = Object.create(parent.prototype);
   /** @override */
   child.prototype.constructor = child;
+};
+
+/**
+ * Hack: extend super-class for AnimateCC
+ * @param {Function} subclass
+ * @param {Function} superclass
+ * @return {Object}
+ */
+createjs.extend = function(subclass, superclass) {
+  /// <param type="Object" name="subclass"/>
+  /// <param type="Object" name="superclass"/>
+  /**
+   * @constructor
+   */
+  function Klass_() {
+    this.constructor = subclass;
+  }
+  Klass_.prototype = superclass.prototype;
+  return (subclass.prototype = new Klass_());
 };
 
 /**
@@ -837,6 +856,7 @@ if (!createjs.SUPPORT_AMD) {
     'version':
         '0.' + createjs.MAJOR_VERSION + '.' + createjs.MINOR_VERSION,
     'denaVersion':
-        (createjs.DENA_MAJOR_VERSION << 16) + createjs.DENA_MINOR_VERSION
+        (createjs.DENA_MAJOR_VERSION << 16) + createjs.DENA_MINOR_VERSION,
+    'extend': createjs.extend
   });
 }
