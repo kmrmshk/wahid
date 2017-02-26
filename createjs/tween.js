@@ -441,6 +441,12 @@ createjs.Tween.get =
     tween.paused_ = !!opt_properties['paused'];
     tween.useTicks_ = !!opt_properties['useTicks'];
   }
+
+  // Hack: determined that it is instanceof Sprite, it is forcibly paused.
+  if (target instanceof createjs.Sprite) {
+    tween.paused_ = true;
+  }
+
   if (!tween.paused_) {
     tween.register_(target);
   }
