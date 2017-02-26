@@ -67,6 +67,22 @@ createjs.Sprite = function(spriteSheet, opt_frameOrAnimation) {
 };
 createjs.inherits('Sprite', createjs.Sprite, createjs.DisplayObject);
 
+createjs.Sprite.prototype.getSpriteSheet_ = function(){
+  return this.spriteSheet_;
+};
+
+createjs.Sprite.prototype.setSpriteSheet_ = function(ss){
+  this.spriteSheet_ = ss;
+  if(ss){
+    this.framerate_ = ss.framerate;
+  }
+};
+
+Object.defineProperty(createjs.Sprite.prototype, 'spriteSheet', {
+  get: createjs.Sprite.prototype.getSpriteSheet_,
+  set: createjs.Sprite.prototype.setSpriteSheet_
+});
+
 /**
  * The SpriteSheet instance exported to applications.
  * @type {createjs.SpriteSheet}
