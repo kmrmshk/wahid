@@ -1193,4 +1193,5 @@ createjs.Ease.MINIMAL_METHODS_ = {
  * @const
  */
 createjs.Ease.exports =
-    createjs.exportStatic('createjs.Ease', createjs.Ease.MINIMAL_METHODS_);
+    //createjs.exportStatic('createjs.Ease', createjs.Ease.MINIMAL_METHODS_);
+    createjs.exportStatic('createjs.Ease', createjs.Ease.ALL_METHODS_);
