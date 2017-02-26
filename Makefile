@@ -123,9 +123,23 @@ WRAPPER_FILE = LICENSE.js
 BUILD_NUMBER = 0
 
 # Whether this library uses the <iframe> player.
-USE_FRAME = true
+USE_FRAME = false
 
 all: createjs-min.js createjs-dbg.js
+
+createjs.min.js: $(SOURCES) $(WRAPPER_FILE)
+	$(JAVA) -jar $(CLOSURE_COMPIER) \
+		--define='createjs.COMPILED=true' \
+		--define='createjs.DEBUG=false' \
+		--define='createjs.SUPPORT_AMD=false' \
+		--define='createjs.DENA_BUILD_NUMBER=$(BUILD_NUMBER)' \
+		--compilation_level=ADVANCED_OPTIMIZATIONS \
+		--use_types_for_optimization \
+		--warning_level=VERBOSE \
+		--output_wrapper_file=$(WRAPPER_FILE) \
+		--js_output_file $@ \
+		--externs $(EXTERNS) \
+		--js $(SOURCES)
 
 createjs-min.js: $(SOURCES) $(WRAPPER_FILE)
 	$(JAVA) -jar $(CLOSURE_COMPIER) \
